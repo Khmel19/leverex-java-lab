@@ -1,9 +1,9 @@
-## Как запустить
-- **1.** Загрузить репозиторий себе на комп.
-- **2.** Открываем консоль и переходим в директорию **_console-experience_** скачанного репозитория из пункта **1** : **_cd <путь к директории>_**, в моем случае:**_cd d:/leverex-java-lab/console-experience_**
-- **3.** Пишем следующую команду в консоль: **_javac -d bin src/by/khmel/*.java_** тем самым мы компилируем java-файлы и создаем папку **_bin_** (при помощи ключа **_-d_**) куда и попадают скомпилированные java-файлы.
-- **4** Теперь, чтобы запустить наши скомпилированные файлы пишем в консоль: **_java -cp bin by.khmel.Main_** (**_-cp_** - ключ после которого следует указать местоположение скомпилированных классов).
-## Как создать jar-ник и запустить
-- **1.** Выполнить подпункты **1-3** из пункта **Как запустить** или просто продолжить если вы начали с пункта **Как запустить**.
-- **2.** Пишем следующую команду в консоль: **_jar -c -f application.jar -e by.khmel.Main -C bin ._** где **_-с_ (--create)_** - создать jar-ник,  **_-f (--file)_** ключ после которого пишется имя создающегося jar-ника, **_-e (--main-class)_** - это entry point, т.е. после этого ключа мы указываем точку входа в программу, **_-С_** - ключ после которого пишется путь к скомпилированным файлам, **.** - путь, куда будет помещен jar-ник.
-- **3.** Чтобы запустить созданный jar-ник пишем в консоль: **_java -jar application.jar_**
+## How to compile and run
+- **1.** Download the repository to your computer.
+- **2.** Open the console and go to the directory **_console-experience_** of the downloaded repository from the item **1** : **_cd [directory path]_**, in my case: **_cd d:/leverex-java-lab/console-experience_**
+- **3.** Write the following command to the console: **_javac -d bin src/by/khmel/*.java_** thereby we compile java files and create a folder **_bin_** (with a key **_-d_**) where the compiled java files go.
+- **4** Now, to run our compiled files, write to the console: **_java -cp bin by.khmel.Main_** (**_-cp_** - a key after which you should specify the location of the compiled classes).
+## How to build and run jar-file
+- **1.** Execute subitems **1-3** from item **How to compile and run**or just continue if you started from item **How to compile and run**.
+- **2.** Write the following command to the console: **_jar -c -f application.jar -e by.khmel.Main -C bin ._** where **_-с_ (--create)_** - create jar-file,  **_-f (--file)_** a key followed by the jar-file's name, **_-e (--main-class)_** - it's entry point, after this key, we indicate the entry point to the program, **_-С_** - a key after which we write the path to the compiled files, **.** - the path where the jar-file will be created.
+- **3.** To run the created jar-file, write to the console: **_java -jar application.jar_**

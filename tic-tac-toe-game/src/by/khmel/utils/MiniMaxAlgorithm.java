@@ -1,10 +1,10 @@
 package by.khmel.utils;
 
-public class MiniMax {
+public class MiniMaxAlgorithm {
 
     private static final int MAX_DEPTH = 6;
 
-    private MiniMax() {
+    private MiniMaxAlgorithm() {
     }
     public static int miniMax(Board board, int depth, boolean isMax) {
         int boardVal = evaluateBoard(board, depth);
@@ -80,13 +80,13 @@ public class MiniMax {
     private static int evaluateBoard(Board board, int depth) {
         int rowSum = 0;
         int bWidth = Board.getROWS();
-        int Xwin = Seed.CROSS.getSeed() * bWidth;
-        int Owin = Seed.NOUGHT.getSeed() * bWidth;
+        int Xwin = Seed.CROSS.getMark() * bWidth;
+        int Owin = Seed.NOUGHT.getMark() * bWidth;
 
         // Check rows for winner.
         for (int row = 0; row < bWidth; row++) {
             for (int col = 0; col < bWidth; col++) {
-                rowSum += board.getCells()[row][col].getContent().getSeed();
+                rowSum += board.getCells()[row][col].getContent().getMark();
             }
             if (rowSum == Xwin) {
                 return 10 + depth;
@@ -100,7 +100,7 @@ public class MiniMax {
         rowSum = 0;
         for (int col = 0; col < bWidth; col++) {
             for (int row = 0; row < bWidth; row++) {
-                rowSum += board.getCells()[row][col].getContent().getSeed();
+                rowSum += board.getCells()[row][col].getContent().getMark();
             }
             if (rowSum == Xwin) {
                 return 10 + depth;
@@ -114,7 +114,7 @@ public class MiniMax {
         // Top-left to bottom-right diagonal.
         rowSum = 0;
         for (int i = 0; i < bWidth; i++) {
-            rowSum += board.getCells()[i][i].getContent().getSeed();
+            rowSum += board.getCells()[i][i].getContent().getMark();
         }
         if (rowSum == Xwin) {
             return 10 + depth;
@@ -126,7 +126,7 @@ public class MiniMax {
         rowSum = 0;
         int indexMax = bWidth - 1;
         for (int i = 0; i <= indexMax; i++) {
-            rowSum += board.getCells()[i][indexMax-i].getContent().getSeed();
+            rowSum += board.getCells()[i][indexMax-i].getContent().getMark();
         }
         if (rowSum == Xwin) {
             return 10 + depth;

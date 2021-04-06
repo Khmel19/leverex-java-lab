@@ -11,9 +11,9 @@ public class CpuPlayer extends Player {
     }
 
     @Override
-    protected int[] move(Seed seed) {
+    protected int[] move() {
         System.out.println("\nAI plays for '" + getSeed().getMark()+"', AI made a move: ");
 
-        return MiniMaxAlgorithm.getBestMove(getBoard());
+        return MiniMaxAlgorithm.getBestMove(Board.getBoard());
     }
 }

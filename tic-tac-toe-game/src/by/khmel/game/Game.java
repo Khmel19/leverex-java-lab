@@ -11,7 +11,6 @@ import by.khmel.utils.Seed;
 import java.util.Arrays;
 import java.util.Scanner;
 
-
 public class Game {
     private final Board board;
     private GameMode gameMode;
@@ -19,6 +18,7 @@ public class Game {
     private Player currentPlayer;
     private Player[] players;
     private static final Scanner in = new Scanner(System.in);
+
 
     public Game() {
         this.board = Board.getBoard();
@@ -42,6 +42,7 @@ public class Game {
         } while (currentState == GameState.PLAYING);
     }
 
+
     public void initGame() {
         setGameMode();
         board.init();
@@ -49,12 +50,13 @@ public class Game {
             players = new Player[]{new HumanPlayer(board, Seed.CROSS), new HumanPlayer(board, Seed.NOUGHT)};
             currentPlayer = players[0];
         } else {
-            players = new Player[]{new HumanPlayer(board, Seed.CROSS), new CpuPlayer(board, Seed.NOUGHT)};
+            players = new Player[]{new HumanPlayer(board, Seed.NOUGHT), new CpuPlayer(board, Seed.CROSS)};
             selectMoveTurn();
         }
         currentState = GameState.PLAYING;
         board.paint();
     }
+
 
     private void selectMoveTurn() {
         boolean validInput = false;
@@ -74,6 +76,7 @@ public class Game {
         } while (!validInput);
     }
 
+
     private void setGameMode() {
         System.out.println("Select game mode:\nPVP - 1\nPVE - 2\n");
         boolean validInput = true;
@@ -92,6 +95,7 @@ public class Game {
             }
         }
     }
+
 
     public void updateGame(Seed theSeed) {
         if (board.hasWon(theSeed)) {

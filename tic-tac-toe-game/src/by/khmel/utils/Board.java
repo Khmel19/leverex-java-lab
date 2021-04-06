@@ -15,6 +15,7 @@ public class Board {
         return board;
     }
 
+
     private Board() {
         cells = new Cell[ROWS][COLS];
         for (int row = 0; row < ROWS; row++) {
@@ -23,6 +24,7 @@ public class Board {
             }
         }
     }
+
 
      public boolean isCellEmpty(int row, int col){
         return cells[row][col].getContent() == Seed.EMPTY;
@@ -35,9 +37,11 @@ public class Board {
         availableMoves --;
     }
 
+
     public boolean anyMovesAvailable() {
         return availableMoves > 0;
     }
+
 
     public void init() {
         for (int row = 0; row < ROWS; row++) {
@@ -46,6 +50,7 @@ public class Board {
             }
         }
     }
+
 
     public boolean isDraw() {
         for (int row = 0; row < ROWS; row++) {
@@ -57,6 +62,7 @@ public class Board {
         }
         return true;
     }
+
 
     public boolean hasWon(Seed theSeed) {
         return (cells[currentRow][0].getContent() == theSeed
@@ -92,13 +98,16 @@ public class Board {
         }
     }
 
+
     public static int getROWS() {
         return ROWS;
     }
 
+
     public static int getCOLS() {
         return COLS;
     }
+
 
     public Cell[][] getCells() {
         return cells;

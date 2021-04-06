@@ -12,22 +12,26 @@ public abstract class Player {
         this.seed = seed;
     }
 
+
     public void playerMove() {
 
-            int[] rowAndCol = move(seed);
+            int[] rowAndCol = move();
             int row = rowAndCol[0];
             int col = rowAndCol[1];
             board.placeSeed(row, col, seed);
 
     }
 
+
     public Seed getSeed() {
         return seed;
     }
+
 
     public Board getBoard() {
         return board;
     }
 
-    protected abstract int[] move(Seed seed);
+
+    protected abstract int[] move();
 }

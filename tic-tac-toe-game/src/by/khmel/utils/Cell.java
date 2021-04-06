@@ -9,9 +9,11 @@ public class Cell {
         clear();
     }
 
+
     public void clear() {
         content = Seed.EMPTY;
     }
+
 
     public void paint() {
         switch (content) {
@@ -21,9 +23,11 @@ public class Cell {
         }
     }
 
+
     public Seed getContent() {
         return content;
     }
+
 
     public void setContent(Seed content) {
         this.content = content;

@@ -1,11 +1,16 @@
 package by.khmel.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MiniMaxAlgorithm {
 
-    private static final int MAX_DEPTH = 6;
+    private static final int MAX_DEPTH = 9;
 
     private MiniMaxAlgorithm() {
     }
+
+
     public static int miniMax(Board board, int depth, boolean isMax) {
         int boardVal = evaluateBoard(board, depth);
 

@@ -12,12 +12,13 @@ public class HumanPlayer extends Player {
         super(board, seed);
     }
 
+
     @Override
-    protected int[] move(Seed seed) {
+    protected int[] move() {
         boolean validInput = false;
         int[] rowAndCol = new int[2];
         do {
-            if (seed == Seed.CROSS) {
+            if (getSeed() == Seed.CROSS) {
                 System.out.println("\nPlayer 'X', enter your move (row[1-3] column[1-3]): ");
             } else {
                 System.out.println("\nPlayer 'O', enter your move (row[1-3] column[1-3]): ");

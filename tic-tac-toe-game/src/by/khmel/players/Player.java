@@ -14,11 +14,10 @@ public abstract class Player {
 
 
     public void playerMove() {
-
-            int[] rowAndCol = move();
-            int row = rowAndCol[0];
-            int col = rowAndCol[1];
-            board.placeSeed(row, col, seed);
+        int[] rowAndCol = move();
+        int row = rowAndCol[0];
+        int col = rowAndCol[1];
+        board.placeSeed(row, col, seed);
 
     }
 

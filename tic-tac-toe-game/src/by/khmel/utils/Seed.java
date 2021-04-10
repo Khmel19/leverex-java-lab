@@ -9,6 +9,8 @@ public enum Seed {
     Seed(char seed) {
         this.seed = seed;
     }
+
+
     public char getMark() {
         return this.seed;
     }

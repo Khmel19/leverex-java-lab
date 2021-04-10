@@ -1,16 +1,18 @@
 package by.khmel.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MiniMaxAlgorithm {
 
-    private static final int MAX_DEPTH = 9;
+    private static final int MAX_DEPTH = 6;
 
     private MiniMaxAlgorithm() {
     }
 
-
+    /**
+     * Play moves on the board alternating between playing as X and O analysing
+     * the board each time to return the value of the highest value move for the
+     * X or O player. Return the highest value move when a terminal node or the
+     * maximum search depth is reached.
+     */
     public static int miniMax(Board board, int depth, boolean isMax) {
         int boardVal = evaluateBoard(board, depth);
 
@@ -26,10 +28,10 @@ public class MiniMaxAlgorithm {
             for (int row = 0; row < Board.getROWS(); row++) {
                 for (int col = 0; col < Board.getCOLS(); col++) {
                     if (board.isCellEmpty(row, col)) {
-                        board.getCells()[row][col].setContent(Seed.CROSS);
+                        board.placeSeed(row, col, Seed.NOUGHT);
                         highestVal = Math.max(highestVal, miniMax(board,
                                 depth - 1, false));
-                        board.getCells()[row][col].setContent(Seed.EMPTY);
+                        board.placeSeed(row, col, Seed.EMPTY);
                     }
                 }
             }
@@ -40,10 +42,10 @@ public class MiniMaxAlgorithm {
             for (int row = 0; row < Board.getROWS(); row++) {
                 for (int col = 0; col < Board.getCOLS(); col++) {
                     if (board.isCellEmpty(row, col)) {
-                        board.getCells()[row][col].setContent(Seed.NOUGHT);
+                        board.placeSeed(row, col, Seed.CROSS);
                         lowestVal = Math.min(lowestVal, miniMax(board,
                                 depth - 1, true));
-                        board.getCells()[row][col].setContent(Seed.EMPTY);
+                        board.placeSeed(row, col, Seed.EMPTY);
                     }
                 }
             }
@@ -53,17 +55,33 @@ public class MiniMaxAlgorithm {
 
     //Evaluate every legal move on the board and return the best one.
 
-    public static int[] getBestMove(Board board) {
+    public static int[] getBestMove(Board board, Seed seed) {
         int[] bestMove = new int[]{-1, -1};
-        int bestValue = Integer.MIN_VALUE;
+        int bestValue;
+        boolean isNought;
+        if (seed.equals(Seed.NOUGHT)) {
+            bestValue = Integer.MIN_VALUE;
+            isNought = true;
+        } else {
+            bestValue = Integer.MAX_VALUE;
+            isNought = false;
+        }
 
         for (int row = 0; row < Board.getROWS(); row++) {
             for (int col = 0; col < Board.getCOLS(); col++) {
                 if (board.isCellEmpty(row, col)) {
-                    board.getCells()[row][col].setContent(Seed.CROSS);
-                    int moveValue = miniMax(board, MAX_DEPTH, false);
-                    board.getCells()[row][col].setContent(Seed.EMPTY);
-                    if (moveValue > bestValue) {
+                    Seed reverseSeed = (seed.equals(Seed.NOUGHT)) ? Seed.CROSS : Seed.NOUGHT;
+                    board.placeSeed(row, col, reverseSeed);
+                    boolean isMax = seed.equals(Seed.CROSS);
+                    int moveValue = miniMax(board, MAX_DEPTH, isMax);
+                    board.placeSeed(row, col, Seed.EMPTY);
+                    if (isNought) {
+                        if (moveValue > bestValue) {
+                            bestMove[0] = row;
+                            bestMove[1] = col;
+                            bestValue = moveValue;
+                        }
+                    } else if (moveValue < bestValue) {
                         bestMove[0] = row;
                         bestMove[1] = col;
                         bestValue = moveValue;
@@ -74,14 +92,13 @@ public class MiniMaxAlgorithm {
         return bestMove;
     }
 
-    /*
-     * Evaluate the given board from the perspective of the X player, return
+    /**
+     * Evaluate the given board from the perspective of the X or O player, return
      * 10 if a winning board configuration is found, -10 for a losing one and 0
      * for a draw, weight the value of a win/loss/draw according to how many
      * moves it would take to realise it using the depth of the game tree the
      * board configuration is at.
      */
-
     private static int evaluateBoard(Board board, int depth) {
         int rowSum = 0;
         int bWidth = Board.getROWS();
@@ -131,7 +148,7 @@ public class MiniMaxAlgorithm {
         rowSum = 0;
         int indexMax = bWidth - 1;
         for (int i = 0; i <= indexMax; i++) {
-            rowSum += board.getCells()[i][indexMax-i].getContent().getMark();
+            rowSum += board.getCells()[i][indexMax - i].getContent().getMark();
         }
         if (rowSum == Xwin) {
             return 10 + depth;

@@ -8,8 +8,8 @@ public class Board {
     private int availableMoves = ROWS * COLS;
     private int currentRow, currentCol;
 
-    public static Board getBoard(){
-        if (board==null){
+    public static Board getBoard() {
+        if (board == null) {
             board = new Board();
         }
         return board;
@@ -26,15 +26,16 @@ public class Board {
     }
 
 
-     public boolean isCellEmpty(int row, int col){
+    public boolean isCellEmpty(int row, int col) {
         return cells[row][col].getContent() == Seed.EMPTY;
-     }
+    }
 
-    public void placeSeed(int row, int col, Seed seed){
+
+    public void placeSeed(int row, int col, Seed seed) {
         cells[row][col].setContent(seed);
         currentRow = row;
         currentCol = col;
-        availableMoves --;
+        availableMoves--;
     }
 
 
@@ -70,18 +71,18 @@ public class Board {
                 && cells[currentRow][2].getContent() == theSeed
                 ||
                 cells[0][currentCol].getContent() == theSeed
-                && cells[1][currentCol].getContent() == theSeed
-                && cells[2][currentCol].getContent() == theSeed
+                        && cells[1][currentCol].getContent() == theSeed
+                        && cells[2][currentCol].getContent() == theSeed
                 ||
                 currentRow == currentCol
-                && cells[0][0].getContent() == theSeed
-                && cells[1][1].getContent() == theSeed
-                && cells[2][2].getContent() == theSeed
+                        && cells[0][0].getContent() == theSeed
+                        && cells[1][1].getContent() == theSeed
+                        && cells[2][2].getContent() == theSeed
                 ||
                 currentRow + currentCol == 2
-                && cells[0][2].getContent() == theSeed
-                && cells[1][1].getContent() == theSeed
-                && cells[2][0].getContent() == theSeed);
+                        && cells[0][2].getContent() == theSeed
+                        && cells[1][1].getContent() == theSeed
+                        && cells[2][0].getContent() == theSeed);
     }
 
 

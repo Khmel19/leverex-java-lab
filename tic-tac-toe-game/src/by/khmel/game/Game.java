@@ -37,62 +37,80 @@ public class Game {
             }
 
             currentPlayer = (currentPlayer.getSeed() == Seed.CROSS)
-                    ? Arrays.stream(players).filter(player -> player.getSeed() == Seed.NOUGHT).findFirst().get()
-                    : Arrays.stream(players).filter(player -> player.getSeed() == Seed.CROSS).findFirst().get();
+                    ?
+                    Arrays.stream(players)
+                            .filter(player -> player.getSeed() == Seed.NOUGHT)
+                            .findFirst()
+                            .get()
+                    :
+                    Arrays.stream(players)
+                            .filter(player -> player.getSeed() == Seed.CROSS)
+                            .findFirst()
+                            .get();
         } while (currentState == GameState.PLAYING);
     }
 
 
     public void initGame() {
         setGameMode();
-        board.init();
-        if (this.gameMode == GameMode.PVP) {
-            players = new Player[]{new HumanPlayer(board, Seed.CROSS), new HumanPlayer(board, Seed.NOUGHT)};
-            currentPlayer = players[0];
-        } else {
-            players = new Player[]{new HumanPlayer(board, Seed.NOUGHT), new CpuPlayer(board, Seed.CROSS)};
-            selectMoveTurn();
-        }
+        initPlayers();
         currentState = GameState.PLAYING;
+        board.init();
         board.paint();
     }
 
 
-    private void selectMoveTurn() {
-        boolean validInput = false;
+    private void initPlayers() {
+        if (this.gameMode == GameMode.PVP) {
+            players = new Player[]{new HumanPlayer(board, Seed.CROSS), new HumanPlayer(board, Seed.NOUGHT)};
+            currentPlayer = players[0];
+        } else {
+            selectSeedType();
+
+            selectMoveTurn();
+        }
+    }
+
+
+    private void selectSeedType() {
+        String seedType = inputValidation("Which mark will you play for?\nX - 1\nO - 2");
+        if (seedType.equals("1")) {
+            players = new Player[]{new HumanPlayer(board, Seed.CROSS), new CpuPlayer(board, Seed.NOUGHT)};
+        } else {
+            players = new Player[]{new HumanPlayer(board, Seed.NOUGHT), new CpuPlayer(board, Seed.CROSS)};
+        }
+    }
+
+
+    private String inputValidation(String output) {
+        System.out.println(output);
         do {
-            System.out.println("Who will move first?\nAI - 1\nMe - 2");
-            String turn = in.nextLine();
-            if (turn.matches("[1-2]")) {
-                if (turn.equals("1")) {
-                    currentPlayer = players[1];
-                } else {
-                    currentPlayer = players[0];
-                }
-                validInput = true;
+            String input = in.nextLine();
+            if (input.matches("[1-2]")) {
+                return input;
             } else {
                 System.err.println("This input is not valid");
             }
-        } while (!validInput);
+        } while (true);
+    }
+
+
+    private void selectMoveTurn() {
+        String turn = inputValidation("Who will move first?\nAI - 1\nMe - 2");
+        if (turn.equals("1")) {
+            currentPlayer = players[1];
+        } else {
+            currentPlayer = players[0];
+        }
     }
 
 
     private void setGameMode() {
-        System.out.println("Select game mode:\nPVP - 1\nPVE - 2\n");
-        boolean validInput = true;
-        while (validInput) {
-            String gameMode = in.nextLine();
-            if (gameMode.matches("[1-2]")) {
-                if (gameMode.equals("1")) {
-                    this.gameMode = GameMode.PVP;
-                } else {
-                    this.gameMode = GameMode.PVE;
-                }
-                break;
-            } else {
-                System.err.println("You can choose only 1 or 2");
-                validInput = false;
-            }
+        String gameMode = inputValidation("Select game mode:\nPVP - 1\nPVE - 2\n");
+        if (gameMode.equals("1")) {
+            this.gameMode = GameMode.PVP;
+        } else {
+            this.gameMode = GameMode.PVE;
         }
     }
 
